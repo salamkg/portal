@@ -12,6 +12,7 @@ public class NewsBlogMapperImpl implements NewsBlogMapper {
     @Override
     public NewsBlogDTO toDTO(NewsBlog newsBlog) {
         return NewsBlogDTO.builder()
+                .id(newsBlog.getId())
                 .title(newsBlog.getTitle())
                 .content(newsBlog.getContent())
                 .category(newsBlog.getNewsBlogCategory().getName())

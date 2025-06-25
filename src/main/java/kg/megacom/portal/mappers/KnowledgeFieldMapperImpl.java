@@ -14,7 +14,10 @@ public class KnowledgeFieldMapperImpl implements KnowledgeFieldMapper {
                 .createdAt(knowledgeField.getCreatedAt())
                 .updatedAt(knowledgeField.getUpdatedAt())
                 .createdBy(knowledgeField.getCreatedBy().getFullName())
-                .updatedBy(knowledgeField.getUpdatedBy().getFullName())
+                .updatedBy(knowledgeField.getUpdatedBy() != null
+                        ? knowledgeField.getUpdatedBy().getFullName()
+                        : null
+                )
                 .build();
         return knowledgeFieldDTO;
     }

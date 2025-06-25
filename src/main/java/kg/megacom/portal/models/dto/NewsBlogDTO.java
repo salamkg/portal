@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewsBlogDTO {
+    private Long id;
     private String title;
     private String content;
     private List<NewsBlogFileDTO> newsBlogFiles;

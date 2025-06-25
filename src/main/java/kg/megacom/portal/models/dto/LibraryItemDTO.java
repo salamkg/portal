@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LibraryItemDTO {
+    private Long id;
     private int number;
     private String name;
     private String author;

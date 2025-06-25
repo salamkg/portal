@@ -16,6 +16,7 @@ public class LibraryItemMapperImpl implements LibraryItemMapper {
     public LibraryItemDTO toDTO(LibraryItem libraryItem) {
 
         return LibraryItemDTO.builder()
+                .id(libraryItem.getId())
                 .name(libraryItem.getName())
                 .author(libraryItem.getAuthor())
                 .field(knowledgeFieldMapper.toDTO(libraryItem.getField()))
@@ -24,7 +25,10 @@ public class LibraryItemMapperImpl implements LibraryItemMapper {
                 .createdAt(libraryItem.getCreatedAt())
                 .updatedAt(libraryItem.getUpdatedAt())
                 .createdBy(libraryItem.getCreatedBy().getFullName())
-                .updatedBy(libraryItem.getUpdatedBy().getFullName())
+                .updatedBy(libraryItem.getUpdatedBy() != null
+                        ? libraryItem.getUpdatedBy().getFullName()
+                        : null
+                )
                 .libraryFiles(
                         libraryItem.getFiles().stream().map(file ->
                             MaterialFileDTO.builder()

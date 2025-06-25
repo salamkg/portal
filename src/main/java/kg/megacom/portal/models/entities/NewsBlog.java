@@ -23,6 +23,9 @@ public class NewsBlog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+
+    @Lob
+//    @Column(length = 5000)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)

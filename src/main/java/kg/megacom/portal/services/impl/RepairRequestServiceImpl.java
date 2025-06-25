@@ -1,6 +1,8 @@
 package kg.megacom.portal.services.impl;
 
 import kg.megacom.portal.exceptions.EmployeeNotFoundException;
+import kg.megacom.portal.mappers.RepairRequestMapper;
+import kg.megacom.portal.models.dto.RepairRequestDTO;
 import kg.megacom.portal.models.entities.Employee;
 import kg.megacom.portal.models.entities.RepairRequest;
 import kg.megacom.portal.repositories.EmployeeRepository;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class RepairRequestServiceImpl implements RepairRequestService {
@@ -17,6 +20,8 @@ public class RepairRequestServiceImpl implements RepairRequestService {
     private RepairRequestRepository repairRequestRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private RepairRequestMapper repairRequestMapper;
 
     @Override
     public void createRepairRequest(String repairLocation, String repairDescription) {
@@ -34,6 +39,16 @@ public class RepairRequestServiceImpl implements RepairRequestService {
         repairRequest.setEmployee(employee);
         repairRequest.setCreatedAt(new Date());
         repairRequestRepository.save(repairRequest);
+    }
+
+    @Override
+    public List<RepairRequestDTO> getAllRepairRequests() {
+        List<RepairRequest> repairRequests = repairRequestRepository.findAll();
+        List<RepairRequestDTO> repairRequestDTOList = repairRequests.stream()
+                .map(repairRequest -> repairRequestMapper.toDTO(repairRequest))
+                .toList();
+
+        return repairRequestDTOList;
     }
 
     public Employee getCurrentEmployee() {

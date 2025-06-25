@@ -1,5 +1,6 @@
 package kg.megacom.portal.controllers;
 
+import kg.megacom.portal.models.dto.NewsBlogCategoryDTO;
 import kg.megacom.portal.models.dto.NewsBlogDTO;
 import kg.megacom.portal.services.NewsBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,11 @@ public class NewsController {
     public ResponseEntity<?> addCategory(@RequestParam String name) {
         newsBlogService.addCategory(name);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<NewsBlogCategoryDTO>> getCategories() {
+        List<NewsBlogCategoryDTO> newsBlogCategories = newsBlogService.getAllCategories();
+        return ResponseEntity.ok(newsBlogCategories);
     }
 }

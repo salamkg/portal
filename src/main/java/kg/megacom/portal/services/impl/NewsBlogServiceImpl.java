@@ -1,7 +1,9 @@
 package kg.megacom.portal.services.impl;
 
 import kg.megacom.portal.exceptions.EmployeeNotFoundException;
+import kg.megacom.portal.mappers.NewsBlogCategoryMapper;
 import kg.megacom.portal.mappers.NewsBlogMapper;
+import kg.megacom.portal.models.dto.NewsBlogCategoryDTO;
 import kg.megacom.portal.models.dto.NewsBlogDTO;
 import kg.megacom.portal.models.entities.Employee;
 import kg.megacom.portal.models.entities.NewsBlog;
@@ -28,6 +30,8 @@ public class NewsBlogServiceImpl implements NewsBlogService {
     private EmployeeRepository employeeRepository;
     @Autowired
     private NewsBlogMapper newsBlogMapper;
+    @Autowired
+    private NewsBlogCategoryMapper newsBlogCategoryMapper;
 
     @Override
     public void create(String title, String content, Long categoryId, List<MultipartFile> newsBlogFiles) {
@@ -87,6 +91,15 @@ public class NewsBlogServiceImpl implements NewsBlogService {
         NewsBlog newsBlog = newsBlogRepository.findById(id).orElseThrow(() -> new RuntimeException("News Blog not found"));
         NewsBlogDTO newsBlogDTO = newsBlogMapper.toDTO(newsBlog);
         return newsBlogDTO;
+    }
+
+    @Override
+    public List<NewsBlogCategoryDTO> getAllCategories() {
+        List<NewsBlogCategory> newsBlogCategories = newsBlogCategoryRepository.findAll();
+        List<NewsBlogCategoryDTO> newsBlogCategoryDTOList = newsBlogCategories.stream()
+                .map(newsBlogCategory -> newsBlogCategoryMapper.toDTO(newsBlogCategory))
+                .toList();
+        return newsBlogCategoryDTOList;
     }
 
 

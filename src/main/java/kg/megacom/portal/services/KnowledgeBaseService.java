@@ -14,4 +14,8 @@ public interface KnowledgeBaseService {
     KnowledgeFieldDTO findField(Long id);
 
     void createLibraryItem(String itemName, String author, Long fieldId, int quantity, List<MultipartFile> libraryFile);
+
+    List<KnowledgeFieldDTO> getAllFields();
+
+    LibraryItemDTO findLibraryItem(Long id);
 }

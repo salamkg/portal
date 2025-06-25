@@ -67,12 +67,16 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
     @Override
     public void createLibraryItem(String itemName, String author, Long fieldId, int quantity, List<MultipartFile> libraryFiles) {
         try {
+            //TODO get logged in user
+            Employee employee = getCurrentEmployee();
+
             LibraryItem libraryItem = new LibraryItem();
             libraryItem.setName(itemName);
             libraryItem.setAuthor(author);
             libraryItem.setCopies(quantity);
             libraryItem.setLocation("location");
             libraryItem.setCreatedAt(new Date());
+            libraryItem.setCreatedBy(employee);
 
             //Get field by id
             KnowledgeField field = knowledgeFieldRepository.findById(fieldId)
@@ -97,6 +101,21 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
         } catch (Exception ex) {
             throw new LibraryItemCreationException("Не удалось создать литературу: " + ex.getMessage());
         }
+    }
+
+    @Override
+    public List<KnowledgeFieldDTO> getAllFields() {
+        List<KnowledgeField> knowledgeFieldList = knowledgeFieldRepository.findAll();
+        List<KnowledgeFieldDTO> knowledgeFieldDTOList = knowledgeFieldList.stream()
+                .map(knowledgeField -> knowledgeFieldMapper.toDTO(knowledgeField))
+                .toList();
+        return knowledgeFieldDTOList;
+    }
+
+    @Override
+    public LibraryItemDTO findLibraryItem(Long id) {
+        LibraryItem libraryItem = libraryItemRepository.findById(id).orElse(null);
+        return libraryItemMapper.toDTO(libraryItem);
     }
 
     public Employee getCurrentEmployee() {

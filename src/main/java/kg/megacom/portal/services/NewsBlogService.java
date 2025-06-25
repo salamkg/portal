@@ -1,5 +1,6 @@
 package kg.megacom.portal.services;
 
+import kg.megacom.portal.models.dto.NewsBlogCategoryDTO;
 import kg.megacom.portal.models.dto.NewsBlogDTO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,4 +14,6 @@ public interface NewsBlogService {
     void addCategory(String name);
 
     NewsBlogDTO getById(Long id);
+
+    List<NewsBlogCategoryDTO> getAllCategories();
 }

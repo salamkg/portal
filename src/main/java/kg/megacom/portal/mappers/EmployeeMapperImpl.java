@@ -1,5 +1,6 @@
 package kg.megacom.portal.mappers;
 
+import kg.megacom.portal.models.dto.DepartmentDTO;
 import kg.megacom.portal.models.dto.EmployeeDTO;
 import kg.megacom.portal.models.entities.Employee;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,11 @@ public class EmployeeMapperImpl implements EmployeeMapper {
                 .workPlace(employee.getWorkPlace())
                 .workOffice(employee.getWorkOffice())
                 .identificator_1C(employee.getIdentificator_1C())
+                .departmentName(
+                        DepartmentDTO.builder()
+                                .name(employee.getDepartment().getName())
+                                .build()
+                )
                 .build();
     }
 }
