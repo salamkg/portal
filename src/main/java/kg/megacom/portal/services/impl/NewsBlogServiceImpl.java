@@ -38,10 +38,11 @@ public class NewsBlogServiceImpl implements NewsBlogService {
         //TODO get logged in user
         Employee employee = getCurrentEmployee();
 
-        NewsBlog newsBlog = new NewsBlog();
-        newsBlog.setTitle(title);
-        newsBlog.setContent(content);
-        newsBlog.setCreatedBy(employee);
+        NewsBlog newsBlog = NewsBlog.builder()
+                .title(title)
+                .content(content)
+                .createdBy(employee)
+                .build();
 
         //Get Category by id
         NewsBlogCategory newsBlogCategory = newsBlogCategoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found"));
@@ -54,10 +55,11 @@ public class NewsBlogServiceImpl implements NewsBlogService {
                 String fileName = file.getOriginalFilename();
                 String filePath = uploadDir + UUID.randomUUID() + "_" + fileName;
 
-                NewsBlogFile newsBlogFile = new NewsBlogFile();
-                newsBlogFile.setFileName(fileName);
-                newsBlogFile.setFilePath(filePath);
-                newsBlogFile.setNewsBlog(newsBlog);
+                NewsBlogFile newsBlogFile = NewsBlogFile.builder()
+                        .fileName(fileName)
+                        .filePath(filePath)
+                        .newsBlog(newsBlog)
+                        .build();
 
                 newsBlog.getNewsBlogFiles().add(newsBlogFile);
             }
@@ -80,9 +82,10 @@ public class NewsBlogServiceImpl implements NewsBlogService {
         //TODO get logged in user
         Employee employee = getCurrentEmployee();
 
-        NewsBlogCategory newsBlogCategory = new NewsBlogCategory();
-        newsBlogCategory.setName(name);
-        newsBlogCategory.setCreatedBy(employee);
+        NewsBlogCategory newsBlogCategory = NewsBlogCategory.builder()
+                .name(name)
+                .createdBy(employee)
+                .build();
         newsBlogCategoryRepository.save(newsBlogCategory);
     }
 

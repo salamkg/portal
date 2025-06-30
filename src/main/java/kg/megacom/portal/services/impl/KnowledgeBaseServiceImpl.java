@@ -52,9 +52,10 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
         //TODO get logged in user
         Employee employee = getCurrentEmployee();
 
-        KnowledgeField knowledgeField = new KnowledgeField();
-        knowledgeField.setName(fieldName);
-        knowledgeField.setCreatedBy(employee);
+        KnowledgeField knowledgeField = KnowledgeField.builder()
+                .name(fieldName)
+                .createdBy(employee)
+                .build();
         knowledgeFieldRepository.save(knowledgeField);
     }
 
@@ -70,13 +71,14 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
             //TODO get logged in user
             Employee employee = getCurrentEmployee();
 
-            LibraryItem libraryItem = new LibraryItem();
-            libraryItem.setName(itemName);
-            libraryItem.setAuthor(author);
-            libraryItem.setCopies(quantity);
-            libraryItem.setLocation("location");
-            libraryItem.setCreatedAt(new Date());
-            libraryItem.setCreatedBy(employee);
+            LibraryItem libraryItem = LibraryItem.builder()
+                    .name(itemName)
+                    .author(author)
+                    .copies(quantity)
+                    .location("location")
+                    .createdAt(new Date())
+                    .createdBy(employee)
+                    .build();
 
             //Get field by id
             KnowledgeField field = knowledgeFieldRepository.findById(fieldId)
@@ -89,10 +91,12 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
                     String fileName = file.getOriginalFilename();
                     String filePath = uploadDir + UUID.randomUUID() + "_" + fileName;
 
-                    MaterialFile materialFile = new MaterialFile();
-                    materialFile.setFileName(fileName);
-                    materialFile.setFilePath(filePath);
-                    materialFile.setLibraryItem(libraryItem);
+                    MaterialFile materialFile = MaterialFile.builder()
+                            .fileName(fileName)
+                            .filePath(filePath)
+                            .libraryItem(libraryItem)
+                            .build();
+
                     libraryItem.getFiles().add(materialFile);
                 }
             }

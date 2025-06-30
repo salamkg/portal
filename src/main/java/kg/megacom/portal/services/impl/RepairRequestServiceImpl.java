@@ -28,16 +28,16 @@ public class RepairRequestServiceImpl implements RepairRequestService {
         //Get Employee
         Employee employee = getCurrentEmployee();
 
-        RepairRequest repairRequest = new RepairRequest();
-        repairRequest.setRepairLocation(repairLocation);
-        repairRequest.setRepairDescription(repairDescription);
-
-        repairRequest.setEmployeeFullName(employee.getFirstName() + " " + employee.getLastName() + " " + employee.getMiddleName());
-        repairRequest.setDepartment(employee.getDepartment().getName());
-        repairRequest.setPhoneNumber(employee.getCompanyNumber());
-        repairRequest.setEmail(employee.getEmail());
-        repairRequest.setEmployee(employee);
-        repairRequest.setCreatedAt(new Date());
+        RepairRequest repairRequest = RepairRequest.builder()
+                .repairLocation(repairLocation)
+                .repairDescription(repairDescription)
+                .employee(employee)
+                .employeeFullName(employee.getFullName())
+                .department(employee.getDepartment().getName())
+                .phoneNumber(employee.getCompanyNumber())
+                .email(employee.getEmail())
+                .createdAt(new Date())
+                .build();
         repairRequestRepository.save(repairRequest);
     }
 
