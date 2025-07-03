@@ -1,6 +1,5 @@
 package kg.megacom.portal.controllers;
 
-import kg.megacom.portal.utils.LocalizationService;
 import kg.megacom.portal.models.dto.EmployeeDTO;
 import kg.megacom.portal.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +25,6 @@ public class EmployeeController {
                                           @RequestParam(required = false, defaultValue = "25") Integer limit, @RequestParam(required = false) Integer langId) {
 
         List<EmployeeDTO> employees = employeeService.findAll(pageNumber, limit);
-        //TODO remove
-        String message1 = LocalizationService.getMessage(langId, "helloMsg");
-        String message2 = LocalizationService.getMessage(langId, "welcomeMsg");
-        System.out.println(message1 + " " + message2);
 
         return ResponseEntity.ok(employees);
     }
