@@ -1,8 +1,10 @@
 package kg.megacom.portal.mappers;
 
+import kg.megacom.portal.models.dto.BestEmployeeDTO;
 import kg.megacom.portal.models.dto.DepartmentDTO;
 import kg.megacom.portal.models.dto.EmployeeDTO;
 import kg.megacom.portal.models.entities.Employee;
+import kg.megacom.portal.models.entities.BestEmployee;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -43,6 +45,19 @@ public class EmployeeMapperImpl implements EmployeeMapper {
                                 .name(employee.getDepartment().getName())
                                 .build()
                 )
+                .build();
+    }
+
+    @Override
+    public BestEmployeeDTO toBestEmployeeDTO(BestEmployee bestEmployee) {
+        return BestEmployeeDTO.builder()
+                .employeeId(bestEmployee.getEmployee().getId())
+                .firstName(bestEmployee.getEmployee().getFirstName())
+                .lastName(bestEmployee.getEmployee().getLastName())
+                .middleName(bestEmployee.getEmployee().getMiddleName())
+                .position(bestEmployee.getEmployee().getPosition())
+                .awardType(bestEmployee.getAwardType())
+                .year(bestEmployee.getYear())
                 .build();
     }
 }

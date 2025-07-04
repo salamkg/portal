@@ -1,14 +1,12 @@
 package kg.megacom.portal.controllers;
 
+import kg.megacom.portal.models.dto.BestEmployeeDTO;
 import kg.megacom.portal.models.dto.EmployeeDTO;
 import kg.megacom.portal.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +25,18 @@ public class EmployeeController {
         List<EmployeeDTO> employees = employeeService.findAll(pageNumber, limit);
 
         return ResponseEntity.ok(employees);
+    }
+
+    @GetMapping("/best-people")
+    public List<BestEmployeeDTO> getBestEmployees(@RequestParam Integer year) {
+        List<BestEmployeeDTO> bestEmployees = employeeService.getBestEmployees(year);
+        return bestEmployees;
+    }
+
+    @PostMapping("/best-people/create")
+    public ResponseEntity<?> createBestEmployee(@RequestBody BestEmployeeDTO bestEmployeeDTO) {
+        employeeService.createBestEmployees(bestEmployeeDTO);
+        return ResponseEntity.ok().build();
     }
 
 
