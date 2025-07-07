@@ -1,5 +1,6 @@
 package kg.megacom.portal.controllers;
 
+import kg.megacom.portal.models.CreateBestEmployeesResponse;
 import kg.megacom.portal.models.dto.BestEmployeeDTO;
 import kg.megacom.portal.models.dto.EmployeeDTO;
 import kg.megacom.portal.services.EmployeeService;
@@ -35,8 +36,8 @@ public class EmployeeController {
 
     @PostMapping("/best-people/create")
     public ResponseEntity<?> createBestEmployee(@RequestParam(required = false) Integer langId, @RequestBody BestEmployeeDTO bestEmployeeDTO) {
-        employeeService.createBestEmployees(langId, bestEmployeeDTO);
-        return ResponseEntity.ok().build();
+        CreateBestEmployeesResponse createBestEmployeesResponse = employeeService.createBestEmployees(langId, bestEmployeeDTO);
+        return ResponseEntity.ok(createBestEmployeesResponse);
     }
 
 

@@ -3,6 +3,7 @@ package kg.megacom.portal.services.impl;
 import kg.megacom.portal.exceptions.BestEmployeesCreationException;
 import kg.megacom.portal.exceptions.EmployeeNotFoundException;
 import kg.megacom.portal.mappers.EmployeeMapper;
+import kg.megacom.portal.models.CreateBestEmployeesResponse;
 import kg.megacom.portal.models.dto.BestEmployeeDTO;
 import kg.megacom.portal.models.dto.EmployeeDTO;
 import kg.megacom.portal.models.entities.Employee;
@@ -54,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void createBestEmployees(Integer langId, BestEmployeeDTO bestEmployeeDTO) {
+    public CreateBestEmployeesResponse createBestEmployees(Integer langId, BestEmployeeDTO bestEmployeeDTO) {
         try {
             Employee employee = employeeRepository.findById(bestEmployeeDTO.getEmployeeId())
                     .orElseThrow(() -> new EmployeeNotFoundException(getMessage(langId, "employeeNotFound")));
@@ -65,6 +66,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .year(bestEmployeeDTO.getYear())
                     .build();
             bestEmployeeRepository.save(bestEmployee);
+
+            return CreateBestEmployeesResponse.builder()
+                    .bestEmployeeId(bestEmployee.getId())
+                    .build();
         } catch (BestEmployeesCreationException e) {
             log.error("Error while creating best employees: {}", e.getMessage());
             throw new RuntimeException(e);
