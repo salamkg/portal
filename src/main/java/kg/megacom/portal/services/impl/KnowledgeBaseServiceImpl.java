@@ -15,14 +15,17 @@ import kg.megacom.portal.repositories.EmployeeRepository;
 import kg.megacom.portal.repositories.KnowledgeFieldRepository;
 import kg.megacom.portal.repositories.LibraryItemRepository;
 import kg.megacom.portal.services.KnowledgeBaseService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
     @Autowired
@@ -48,15 +51,21 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
     }
 
     @Override
-    public void addField(String fieldName) {
-        //TODO get logged in user
-        Employee employee = getCurrentEmployee();
+    public void addField(Integer langId, String fieldName) {
+        try {
+            //TODO get logged in user
+            Employee employee = getCurrentEmployee();
 
-        KnowledgeField knowledgeField = KnowledgeField.builder()
-                .name(fieldName)
-                .createdBy(employee)
-                .build();
-        knowledgeFieldRepository.save(knowledgeField);
+            KnowledgeField knowledgeField = KnowledgeField.builder()
+                    .name(fieldName)
+                    .createdBy(employee)
+                    .build();
+            knowledgeFieldRepository.save(knowledgeField);
+
+        } catch (RuntimeException e) {
+            log.error("Error while adding field: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -96,14 +105,16 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
                             .filePath(filePath)
                             .libraryItem(libraryItem)
                             .build();
-
+                    if (libraryItem.getFiles() == null) {
+                        libraryItem.setFiles(new ArrayList<>());
+                    }
                     libraryItem.getFiles().add(materialFile);
                 }
             }
 
             libraryItemRepository.save(libraryItem);
         } catch (Exception ex) {
-            throw new LibraryItemCreationException("Не удалось создать литературу: " + ex.getMessage());
+            throw new LibraryItemCreationException("Error creating Library Item: " + ex.getMessage());
         }
     }
 

@@ -34,8 +34,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/best-people/create")
-    public ResponseEntity<?> createBestEmployee(@RequestBody BestEmployeeDTO bestEmployeeDTO) {
-        employeeService.createBestEmployees(bestEmployeeDTO);
+    public ResponseEntity<?> createBestEmployee(@RequestParam(required = false) Integer langId, @RequestBody BestEmployeeDTO bestEmployeeDTO) {
+        employeeService.createBestEmployees(langId, bestEmployeeDTO);
         return ResponseEntity.ok().build();
     }
 

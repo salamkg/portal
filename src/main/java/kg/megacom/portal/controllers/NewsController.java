@@ -19,9 +19,9 @@ public class NewsController {
     private NewsBlogService newsBlogService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestParam String title, @RequestParam String content, @RequestParam Long categoryId,
+    public ResponseEntity<?> create(@RequestParam(required = false) Integer langId, @RequestParam String title, @RequestParam String content, @RequestParam Long categoryId,
                                     @RequestParam(required = false) List<MultipartFile> files) {
-        newsBlogService.create(title, content, categoryId, files);
+        newsBlogService.create(langId, title, content, categoryId, files);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -32,14 +32,14 @@ public class NewsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<NewsBlogDTO> get(@PathVariable Long id) {
-        NewsBlogDTO newsBlogDTO = newsBlogService.getById(id);
+    public ResponseEntity<NewsBlogDTO> get(@PathVariable Long id, @RequestParam(required = false) Integer langId) {
+        NewsBlogDTO newsBlogDTO = newsBlogService.getById(id, langId);
         return ResponseEntity.ok(newsBlogDTO);
     }
 
     @PostMapping("/add-category")
-    public ResponseEntity<?> addCategory(@RequestParam String name) {
-        newsBlogService.addCategory(name);
+    public ResponseEntity<?> addCategory(@RequestParam Integer langId, @RequestParam String name) {
+        newsBlogService.addCategory(langId, name);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

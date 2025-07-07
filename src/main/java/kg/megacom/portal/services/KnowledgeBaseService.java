@@ -9,7 +9,7 @@ import java.util.List;
 public interface KnowledgeBaseService {
     List<LibraryItemDTO> findAllLibrary();
 
-    void addField(String fieldName);
+    void addField(Integer langId, String fieldName);
 
     KnowledgeFieldDTO findField(Long id);
 

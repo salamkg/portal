@@ -10,5 +10,5 @@ public interface EmployeeService {
 
     List<BestEmployeeDTO> getBestEmployees(Integer year);
 
-    void createBestEmployees(BestEmployeeDTO bestEmployeeDTO);
+    void createBestEmployees(Integer langId, BestEmployeeDTO bestEmployeeDTO);
 }

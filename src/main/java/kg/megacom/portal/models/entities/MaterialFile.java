@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "material_files")
 public class MaterialFile {
     @Id
     @GeneratedValue

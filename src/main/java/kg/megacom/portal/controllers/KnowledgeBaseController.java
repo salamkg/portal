@@ -50,8 +50,8 @@ public class KnowledgeBaseController {
     }
 
     @PostMapping("/add-field")
-    public ResponseEntity<?> addField(@RequestParam(name = "field") String fieldName) {
-        knowledgeBaseService.addField(fieldName);
+    public ResponseEntity<?> addField(@RequestParam(required = false) Integer langId, @RequestParam(name = "field") String fieldName) {
+        knowledgeBaseService.addField(langId, fieldName);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

@@ -7,13 +7,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface NewsBlogService {
-    void create(String title, String content, Long categoryId, List<MultipartFile> newsBlogFiles);
+    void create(Integer langId, String title, String content, Long categoryId, List<MultipartFile> newsBlogFiles);
 
     List<NewsBlogDTO> getAll();
 
-    void addCategory(String name);
+    void addCategory(Integer langId, String name);
 
-    NewsBlogDTO getById(Long id);
+    NewsBlogDTO getById(Long id, Integer langId);
 
     List<NewsBlogCategoryDTO> getAllCategories();
 }
