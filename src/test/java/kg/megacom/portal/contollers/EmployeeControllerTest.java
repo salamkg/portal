@@ -111,4 +111,41 @@ public class EmployeeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.bestEmployeeId").value(1));
     }
+
+    @Test
+    void getBestEmployees_ShouldReturnOk() throws Exception {
+        Integer year = 2025;
+        BestEmployeeDTO emp1 = BestEmployeeDTO.builder()
+                .employeeId(1L)
+                .year(2025)
+                .awardType(AwardType.CRYSTAL)
+                .firstName("John")
+                .lastName("Doe")
+                .position("Java Programmer")
+                .build();
+
+        BestEmployeeDTO emp2 = BestEmployeeDTO.builder()
+                .employeeId(2L)
+                .year(2025)
+                .awardType(AwardType.CRYSTAL)
+                .firstName("John")
+                .lastName("Doe")
+                .position("Java Programmer")
+                .build();
+        List<BestEmployeeDTO> employeesList = List.of(emp1, emp2);
+
+        when(employeeService.getBestEmployees(eq(year))).thenReturn(employeesList);
+
+        mockMvc.perform(get(BASE_URL + "/best-people")
+                .param("year", String.valueOf(year)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].employeeId").value(1L))
+                .andExpect(jsonPath("$[0].year").value(2025))
+                .andExpect(jsonPath("$[0].awardType").value("CRYSTAL"))
+                .andExpect(jsonPath("$[0].firstName").value("John"))
+                .andExpect(jsonPath("$[0].lastName").value("Doe"))
+                .andExpect(jsonPath("$[1].employeeId").value(2L));
+
+    }
 }
