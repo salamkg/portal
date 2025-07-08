@@ -1,5 +1,7 @@
 package kg.megacom.portal.controllers;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.megacom.portal.models.CreateBestEmployeesResponse;
 import kg.megacom.portal.models.dto.BestEmployeeDTO;
 import kg.megacom.portal.models.dto.EmployeeDTO;
@@ -14,6 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/employees")
+@Tag(name = "Сотрудники", description = "Справочник сотрудников компании")
 public class EmployeeController {
 
     @Autowired

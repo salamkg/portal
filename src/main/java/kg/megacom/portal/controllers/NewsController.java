@@ -1,5 +1,6 @@
 package kg.megacom.portal.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.megacom.portal.models.dto.NewsBlogCategoryDTO;
 import kg.megacom.portal.models.dto.NewsBlogDTO;
 import kg.megacom.portal.services.NewsBlogService;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/news_blog")
+@Tag(name = "Новости", description = "Новости компании")
 public class NewsController {
 
     @Autowired

@@ -1,5 +1,6 @@
 package kg.megacom.portal.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.megacom.portal.models.CreateLibraryItemResponse;
 import kg.megacom.portal.models.dto.KnowledgeFieldDTO;
 import kg.megacom.portal.models.dto.LibraryItemDTO;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/knowledge-base")
+@Tag(name = "База знаний", description = "Раздел предназначен для агрегации общекорпоративных знаний")
 public class KnowledgeBaseController {
     @Autowired
     private KnowledgeBaseService knowledgeBaseService;
