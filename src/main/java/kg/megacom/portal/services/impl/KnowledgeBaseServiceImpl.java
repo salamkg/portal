@@ -5,6 +5,7 @@ import kg.megacom.portal.exceptions.KnowledgeFieldNotFoundException;
 import kg.megacom.portal.exceptions.LibraryItemCreationException;
 import kg.megacom.portal.mappers.KnowledgeFieldMapper;
 import kg.megacom.portal.mappers.LibraryItemMapper;
+import kg.megacom.portal.models.CreateLibraryItemResponse;
 import kg.megacom.portal.models.dto.KnowledgeFieldDTO;
 import kg.megacom.portal.models.dto.LibraryItemDTO;
 import kg.megacom.portal.models.entities.Employee;
@@ -75,7 +76,7 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
     }
 
     @Override
-    public void createLibraryItem(String itemName, String author, Long fieldId, int quantity, List<MultipartFile> libraryFiles) {
+    public CreateLibraryItemResponse createLibraryItem(String itemName, String author, Long fieldId, int quantity, List<MultipartFile> libraryFiles) {
         try {
             //TODO get logged in user
             Employee employee = getCurrentEmployee();
@@ -113,6 +114,10 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
             }
 
             libraryItemRepository.save(libraryItem);
+
+            return CreateLibraryItemResponse.builder()
+                    .libraryItemId(libraryItem.getId())
+                    .build();
         } catch (Exception ex) {
             throw new LibraryItemCreationException("Error creating Library Item: " + ex.getMessage());
         }

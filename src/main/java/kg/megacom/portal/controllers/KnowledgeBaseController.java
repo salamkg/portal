@@ -1,5 +1,6 @@
 package kg.megacom.portal.controllers;
 
+import kg.megacom.portal.models.CreateLibraryItemResponse;
 import kg.megacom.portal.models.dto.KnowledgeFieldDTO;
 import kg.megacom.portal.models.dto.LibraryItemDTO;
 import kg.megacom.portal.services.KnowledgeBaseService;
@@ -30,11 +31,11 @@ public class KnowledgeBaseController {
     }
 
     @PostMapping("/addLibraryItem")
-    public ResponseEntity<LibraryItemDTO> createLibraryItem(@RequestParam String itemName, @RequestParam String author,
+    public ResponseEntity<?> createLibraryItem(@RequestParam String itemName, @RequestParam String author,
                                                          @RequestParam Long fieldId, @RequestParam int quantity,
                                                          @RequestParam(required = false) List<MultipartFile> libraryFiles) {
-        knowledgeBaseService.createLibraryItem(itemName, author, fieldId, quantity, libraryFiles);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        CreateLibraryItemResponse createLibraryItemResponse = knowledgeBaseService.createLibraryItem(itemName, author, fieldId, quantity, libraryFiles);
+        return ResponseEntity.ok(createLibraryItemResponse);
     }
 
     @GetMapping("/all-fields")

@@ -1,5 +1,6 @@
 package kg.megacom.portal.services;
 
+import kg.megacom.portal.models.CreateLibraryItemResponse;
 import kg.megacom.portal.models.dto.KnowledgeFieldDTO;
 import kg.megacom.portal.models.dto.LibraryItemDTO;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +14,7 @@ public interface KnowledgeBaseService {
 
     KnowledgeFieldDTO findField(Long id);
 
-    void createLibraryItem(String itemName, String author, Long fieldId, int quantity, List<MultipartFile> libraryFile);
+    CreateLibraryItemResponse createLibraryItem(String itemName, String author, Long fieldId, int quantity, List<MultipartFile> libraryFile);
 
     List<KnowledgeFieldDTO> getAllFields();
 
