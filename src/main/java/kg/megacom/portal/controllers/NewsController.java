@@ -22,7 +22,7 @@ public class NewsController {
     private NewsBlogService newsBlogService;
 
     @Operation(summary = "Создание новости")
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = "multipart/form-data")
     public ResponseEntity<?> create(@RequestParam(required = false) Integer langId, @RequestParam String title, @RequestParam String content, @RequestParam Long categoryId,
                                     @RequestParam(required = false) List<MultipartFile> files) {
         newsBlogService.create(langId, title, content, categoryId, files);

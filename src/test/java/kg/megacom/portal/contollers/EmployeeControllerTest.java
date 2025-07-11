@@ -91,6 +91,9 @@ public class EmployeeControllerTest {
     @Test
     void createBestEmployee_ShouldReturnOk() throws Exception {
         Integer langId = 1;
+        Long employeeId = 1L;
+        AwardType awardType = AwardType.CRYSTAL;
+        Integer year = 2025;
         BestEmployeeDTO bestEmployeeDTO = BestEmployeeDTO.builder()
                 .employeeId(1L)
                 .year(2025)
@@ -102,7 +105,7 @@ public class EmployeeControllerTest {
 
         CreateBestEmployeesResponse response = CreateBestEmployeesResponse.builder().bestEmployeeId(1L).build();
 
-        when(employeeService.createBestEmployees(eq(langId), any(BestEmployeeDTO.class))).thenReturn(response);
+        when(employeeService.createBestEmployees(eq(langId), eq(employeeId), eq(awardType), eq(year))).thenReturn(response);
 
         mockMvc.perform(post(BASE_URL + "/best-people/create")
                 .param("langId", String.valueOf(langId))

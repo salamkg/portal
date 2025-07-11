@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.megacom.portal.models.CreateBestEmployeesResponse;
 import kg.megacom.portal.models.dto.BestEmployeeDTO;
 import kg.megacom.portal.models.dto.EmployeeDTO;
+import kg.megacom.portal.models.enums.AwardType;
 import kg.megacom.portal.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,9 @@ public class EmployeeController {
 
     @Operation(summary = "Создание лучшего сотрудника")
     @PostMapping("/best-people/create")
-    public ResponseEntity<?> createBestEmployee(@RequestParam(required = false) Integer langId, @RequestBody BestEmployeeDTO bestEmployeeDTO) {
-        CreateBestEmployeesResponse createBestEmployeesResponse = employeeService.createBestEmployees(langId, bestEmployeeDTO);
+    public ResponseEntity<?> createBestEmployee(@RequestParam(required = false) Integer langId, @RequestParam Long employeeId,
+                                                @RequestParam AwardType awardType, Integer year) {
+        CreateBestEmployeesResponse createBestEmployeesResponse = employeeService.createBestEmployees(langId, employeeId, awardType, year);
         return ResponseEntity.ok(createBestEmployeesResponse);
     }
 

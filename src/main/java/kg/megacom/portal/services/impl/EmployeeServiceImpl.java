@@ -8,6 +8,7 @@ import kg.megacom.portal.models.dto.BestEmployeeDTO;
 import kg.megacom.portal.models.dto.EmployeeDTO;
 import kg.megacom.portal.models.entities.Employee;
 import kg.megacom.portal.models.entities.BestEmployee;
+import kg.megacom.portal.models.enums.AwardType;
 import kg.megacom.portal.repositories.BestEmployeeRepository;
 import kg.megacom.portal.repositories.EmployeeRepository;
 import kg.megacom.portal.services.EmployeeService;
@@ -55,15 +56,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public CreateBestEmployeesResponse createBestEmployees(Integer langId, BestEmployeeDTO bestEmployeeDTO) {
+    public CreateBestEmployeesResponse createBestEmployees(Integer langId, Long employeeId, AwardType awardType, Integer year) {
         try {
-            Employee employee = employeeRepository.findById(bestEmployeeDTO.getEmployeeId())
+            Employee employee = employeeRepository.findById(employeeId)
                     .orElseThrow(() -> new EmployeeNotFoundException(getMessage(langId, "employeeNotFound")));
 
             BestEmployee bestEmployee = BestEmployee.builder()
                     .employee(employee)
-                    .awardType(bestEmployeeDTO.getAwardType())
-                    .year(bestEmployeeDTO.getYear())
+                    .awardType(awardType)
+                    .year(year)
                     .build();
             bestEmployeeRepository.save(bestEmployee);
 

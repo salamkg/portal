@@ -37,10 +37,9 @@ public class KnowledgeBaseController {
     }
 
     @Operation(summary = "Создание библиотеки")
-    @PostMapping("/libraryItem/create")
-    public ResponseEntity<?> createLibraryItem(@RequestParam String itemName, @RequestParam String author,
-                                                         @RequestParam Long fieldId, @RequestParam int quantity,
-                                                         @RequestParam(required = false) List<MultipartFile> files) {
+    @PostMapping(value = "/libraryItem/create", consumes = "multipart/form-data")
+    public ResponseEntity<?> createLibraryItem(@RequestParam String itemName, @RequestParam String author, @RequestParam Long fieldId,
+                                               @RequestParam int quantity, @RequestParam(required = false) List<MultipartFile> files) {
         CreateLibraryItemResponse createLibraryItemResponse = knowledgeBaseService.createLibraryItem(itemName, author, fieldId, quantity, files);
         return ResponseEntity.ok(createLibraryItemResponse);
     }
@@ -67,7 +66,7 @@ public class KnowledgeBaseController {
     }
 
     @Operation(summary = "Создание шаблона заявления")
-    @PostMapping("/applicationItem/create")
+    @PostMapping(value = "/applicationItem/create", consumes = "multipart/form-data")
     public ResponseEntity<?> createApplicationItem(@RequestParam(required = false) Integer langId, @RequestParam String title,
                                                    @RequestParam(required = false) List<MultipartFile> files) {
         CreateApplicationItemResponse response = knowledgeBaseService.createApplicationItem(langId, title, files);
