@@ -19,7 +19,7 @@ public class LibraryItemDTO {
     private KnowledgeFieldDTO field;
     private int copies;
     private String location;
-    private List<MaterialFileDTO> libraryFiles;
+    private List<AttachedFileDTO> files;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
     private Date createdAt;

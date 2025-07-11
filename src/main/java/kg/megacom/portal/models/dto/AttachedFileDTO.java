@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MaterialFileDTO {
-    private String fileName;
+public class AttachedFileDTO {
+    private String originalFileName;
     private String filePath;
 }

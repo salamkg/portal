@@ -1,5 +1,6 @@
 package kg.megacom.portal.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import kg.megacom.portal.models.entities.Employee;
 import kg.megacom.portal.repositories.EmployeeRepository;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@Tag(name = "Авторизация")
 @RestController
 @RequestMapping("api/auth")
 public class AuthController {

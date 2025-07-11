@@ -1,5 +1,6 @@
 package kg.megacom.portal.services;
 
+import kg.megacom.portal.models.CreateApplicationItemResponse;
 import kg.megacom.portal.models.CreateLibraryItemResponse;
 import kg.megacom.portal.models.dto.KnowledgeFieldDTO;
 import kg.megacom.portal.models.dto.LibraryItemDTO;
@@ -19,4 +20,8 @@ public interface KnowledgeBaseService {
     List<KnowledgeFieldDTO> getAllFields();
 
     LibraryItemDTO findLibraryItem(Long id);
+
+    CreateApplicationItemResponse createApplicationItem(Integer langId, String name, List<MultipartFile> files);
+
+    void editApplicationItem(Long id, String title, List<MultipartFile> files);
 }

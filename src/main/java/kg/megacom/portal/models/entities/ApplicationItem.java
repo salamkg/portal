@@ -3,7 +3,6 @@ package kg.megacom.portal.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import kg.megacom.portal.models.enums.FileCategory;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,28 +19,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "library_items")
-public class LibraryItem {
+@Table(name = "application_items")
+public class ApplicationItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private int number;
-    private String name;
-    private String author;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "field_id")
-    private KnowledgeField field;
-
-    private int copies;
-    private String location;
-
-    @Enumerated(EnumType.STRING)
-    private FileCategory category;
+    private String title;
 
 //    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<AttachedFile> files = new ArrayList<>();
+
     @CreatedBy
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_id")

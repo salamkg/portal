@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "news_blog_files")
 public class NewsBlogFile {
     @Id
     @GeneratedValue
