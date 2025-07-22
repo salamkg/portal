@@ -2,6 +2,7 @@ package kg.megacom.portal.services;
 
 import kg.megacom.portal.models.CreateApplicationItemResponse;
 import kg.megacom.portal.models.CreateLibraryItemResponse;
+import kg.megacom.portal.models.dto.ApplicationItemDTO;
 import kg.megacom.portal.models.dto.KnowledgeFieldDTO;
 import kg.megacom.portal.models.dto.LibraryItemDTO;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,4 +25,6 @@ public interface KnowledgeBaseService {
     CreateApplicationItemResponse createApplicationItem(Integer langId, String name, List<MultipartFile> files);
 
     void editApplicationItem(Long id, String title, List<MultipartFile> files);
+
+    List<ApplicationItemDTO> getAllApplicationItems();
 }

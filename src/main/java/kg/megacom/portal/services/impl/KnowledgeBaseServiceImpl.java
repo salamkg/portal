@@ -3,10 +3,13 @@ package kg.megacom.portal.services.impl;
 import kg.megacom.portal.exceptions.EmployeeNotFoundException;
 import kg.megacom.portal.exceptions.KnowledgeFieldNotFoundException;
 import kg.megacom.portal.exceptions.LibraryItemCreationException;
+import kg.megacom.portal.exceptions.LibraryItemNotFoundException;
+import kg.megacom.portal.mappers.ApplicationItemMapper;
 import kg.megacom.portal.mappers.KnowledgeFieldMapper;
 import kg.megacom.portal.mappers.LibraryItemMapper;
 import kg.megacom.portal.models.CreateApplicationItemResponse;
 import kg.megacom.portal.models.CreateLibraryItemResponse;
+import kg.megacom.portal.models.dto.ApplicationItemDTO;
 import kg.megacom.portal.models.dto.KnowledgeFieldDTO;
 import kg.megacom.portal.models.dto.LibraryItemDTO;
 import kg.megacom.portal.models.entities.*;
@@ -36,6 +39,8 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
     @Autowired
     private KnowledgeFieldMapper knowledgeFieldMapper;
     @Autowired
+    private ApplicationItemMapper applicationItemMapper;
+    @Autowired
     private ApplicationItemRepository applicationItemRepository;
     @Autowired
     private AttachedFileRepository attachedFileRepository;
@@ -44,11 +49,9 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
     public List<LibraryItemDTO> findAllLibrary() {
         List<LibraryItem> libraryItemList = libraryItemRepository.findAll();
 
-        List<LibraryItemDTO> libraryItemDTOList = libraryItemList.stream()
+        return libraryItemList.stream()
                 .map(libraryItem -> libraryItemMapper.toDTO(libraryItem))
                 .toList();
-
-        return libraryItemDTOList;
     }
 
     @Override
@@ -71,7 +74,7 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
 
     @Override
     public KnowledgeFieldDTO findField(Long fieldId) {
-        KnowledgeField knowledgeField = knowledgeFieldRepository.findById(fieldId).orElseThrow(() -> new RuntimeException("Field not found"));
+        KnowledgeField knowledgeField = knowledgeFieldRepository.findById(fieldId).orElseThrow(() -> new KnowledgeFieldNotFoundException("Field not found"));
         return knowledgeFieldMapper.toDTO(knowledgeField);
     }
 
@@ -111,15 +114,14 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
     @Override
     public List<KnowledgeFieldDTO> getAllFields() {
         List<KnowledgeField> knowledgeFieldList = knowledgeFieldRepository.findAll();
-        List<KnowledgeFieldDTO> knowledgeFieldDTOList = knowledgeFieldList.stream()
+        return knowledgeFieldList.stream()
                 .map(knowledgeField -> knowledgeFieldMapper.toDTO(knowledgeField))
                 .toList();
-        return knowledgeFieldDTOList;
     }
 
     @Override
     public LibraryItemDTO findLibraryItem(Long id) {
-        LibraryItem libraryItem = libraryItemRepository.findById(id).orElse(null);
+        LibraryItem libraryItem = libraryItemRepository.findById(id).orElseThrow(() -> new LibraryItemNotFoundException("LibraryItem not found"));
         return libraryItemMapper.toDTO(libraryItem);
     }
 
@@ -154,14 +156,20 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
         if (files != null && !files.isEmpty()) {
             //remove old files
             List<AttachedFile> attachedFiles = attachedFileRepository.findByItemTypeAndOwnerId(ItemType.ApplicationItem, id);
-            attachedFiles.forEach(attachedFile -> {
-                attachedFileRepository.deleteById(attachedFile.getId());
-            });
+            attachedFiles.forEach(attachedFile -> attachedFileRepository.deleteById(attachedFile.getId()));
             //attach files and save
             saveAttachedFile(files, applicationItem.getId(), ItemType.ApplicationItem);
         }
 
         applicationItemRepository.save(applicationItem);
+    }
+
+    @Override
+    public List<ApplicationItemDTO> getAllApplicationItems() {
+        List<ApplicationItem> applicationItems = applicationItemRepository.findAll();
+        return applicationItems.stream()
+                .map(item -> applicationItemMapper.toDTO(item))
+                .toList();
     }
 
     public void saveAttachedFile(List<MultipartFile> files, Long ownerId, ItemType itemType) {

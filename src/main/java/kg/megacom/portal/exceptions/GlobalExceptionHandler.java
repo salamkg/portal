@@ -31,4 +31,18 @@ public class GlobalExceptionHandler {
         httpResponse.put("message", ex.getMessage());
         return new ResponseEntity<>(httpResponse, HttpStatus.NOT_FOUND); // 404 ?
     }
+
+    @ExceptionHandler(kg.megacom.portal.exceptions.NewsBlogNotFoundException.class)
+    public ResponseEntity<?> handleNewsBlogNotFoundException(NewsBlogNotFoundException ex) {
+        Map<String, String> httpResponse = new HashMap<>();
+        httpResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(httpResponse, HttpStatus.NOT_FOUND); // 404 ?
+    }
+
+    @ExceptionHandler(kg.megacom.portal.exceptions.LibraryItemNotFoundException.class)
+    public ResponseEntity<?> LibraryItemNotFoundException(LibraryItemNotFoundException ex) {
+        Map<String, String> httpResponse = new HashMap<>();
+        httpResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(httpResponse, HttpStatus.NOT_FOUND); // 404 ?
+    }
 }

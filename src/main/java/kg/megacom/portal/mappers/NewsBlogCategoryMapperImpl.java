@@ -11,6 +11,12 @@ public class NewsBlogCategoryMapperImpl implements NewsBlogCategoryMapper {
         return NewsBlogCategoryDTO.builder()
                 .id(newsBlogCategory.getId())
                 .name(newsBlogCategory.getName())
+                .createdBy(newsBlogCategory.getCreatedBy().getFullName())
+                .updatedBy(newsBlogCategory.getUpdatedBy() != null
+                        ? newsBlogCategory.getUpdatedBy().getFullName()
+                        : null)
+                .createdAt(newsBlogCategory.getCreatedAt())
+                .updatedAt(newsBlogCategory.getUpdatedAt())
                 .build();
     }
 }

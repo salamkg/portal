@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kg.megacom.portal.models.CreateApplicationItemResponse;
 import kg.megacom.portal.models.CreateLibraryItemResponse;
+import kg.megacom.portal.models.dto.ApplicationItemDTO;
 import kg.megacom.portal.models.dto.KnowledgeFieldDTO;
 import kg.megacom.portal.models.dto.LibraryItemDTO;
 import kg.megacom.portal.services.KnowledgeBaseService;
@@ -74,11 +75,18 @@ public class KnowledgeBaseController {
     }
 
     @Operation(summary = "Редактирование шаблона заявления")
-    @PutMapping("/applicationItem/{id}/edit")
+    @PutMapping(path = "/applicationItem/{id}/edit", consumes = "multipart/form-data")
     public ResponseEntity<?> editApplicationItem(@PathVariable Long id, @RequestParam(required = false) String title,
                                                  @RequestParam(required = false) List<MultipartFile> files) {
         knowledgeBaseService.editApplicationItem(id, title, files);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Operation(summary = "Просмотр шаблонов заявления")
+    @GetMapping("/applicationItems")
+    public ResponseEntity<List<ApplicationItemDTO>> getAllApplicationItems() {
+        List<ApplicationItemDTO> applicationDto = knowledgeBaseService.getAllApplicationItems();
+        return ResponseEntity.ok(applicationDto);
     }
 
 }
