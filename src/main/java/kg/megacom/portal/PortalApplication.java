@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PortalApplication {
 
     public static void main(String[] args) {
+        System.setProperty("java.security.krb5.conf", "C:/IdeaProjects/portal/krb5.conf");
         SpringApplication.run(PortalApplication.class, args);
     }
 
